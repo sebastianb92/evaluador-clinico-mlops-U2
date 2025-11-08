@@ -8,7 +8,9 @@ Simular un flujo de trabajo de MLOps para exponer un modelo médico simple como 
 
 ## Estructura inicial
 
-servicio_medico/
+```text
+
+evaluador_clinico/
 ├── app/
 │ ├── app.py
 │ ├── model.py
@@ -20,7 +22,7 @@ servicio_medico/
 ├── Dockerfile
 ├── requirements.txt
 └── README.md
-
+```
 
 ## Descripción
 La solución permite al médico ingresar datos del paciente y recibir un diagnóstico simulado.  
