@@ -15,14 +15,17 @@ def predecir():
     fc = int(request.form['fc'])
 
     # Simulación de un "modelo"
+
     if pcr < 3 and fc < 90 and edad < 50:
         resultado = "NO ENFERMO"
     elif 3 <= pcr < 10 or 90 <= fc < 110:
         resultado = "ENFERMEDAD LEVE"
     elif 10 <= pcr < 20 or 110 <= fc < 130:
         resultado = "ENFERMEDAD AGUDA"
-    else:
+    elif 20 <= pcr < 25 or 130 <= fc < 150:
         resultado = "ENFERMEDAD CRÓNICA"
+    else:
+        resultado = "ENFERMEDAD TERMINAL"
 
     return render_template('index.html', resultado=resultado, edad=edad, pcr=pcr, fc=fc)
 
