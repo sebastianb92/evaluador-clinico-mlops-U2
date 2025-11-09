@@ -1,5 +1,10 @@
 name: CI/CD Evaluador Clínico
 
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
 on:
   pull_request:
     branches: [ "main" ]
