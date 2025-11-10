@@ -8,13 +8,14 @@ LOG_DIR = "logs"
 LOG_FILE = os.path.join(LOG_DIR, "predicciones.csv")
 os.makedirs(LOG_DIR, exist_ok=True)
 
-# Si el archivo no existe, crear con encabezados
-if not os.path.exists(LOG_FILE):
-    with open(LOG_FILE, "w", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
-        writer.writerow(["fecha", "edad", "pcr", "fc", "resultado"])
-
 app = Flask(__name__)
+
+def asegurar_archivo_csv():
+    """Crea el archivo de logs si no existe, con encabezados."""
+    if not os.path.exists(LOG_FILE):
+        with open(LOG_FILE, "w", newline="", encoding="utf-8") as f:
+            writer = csv.writer(f)
+            writer.writerow(["fecha", "edad", "pcr", "fc", "resultado"])
 
 # === RUTA PRINCIPAL ===
 @app.route('/')
@@ -47,6 +48,9 @@ def predecir():
     else:
         resultado = "ENFERMEDAD TERMINAL"
 
+    # Asegurar archivo antes de escribir
+    asegurar_archivo_csv()
+
     # Guardar predicción en CSV
     with open(LOG_FILE, "a", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
@@ -65,12 +69,13 @@ def predecir():
 # === RUTA DE HISTORIAL (VISUAL) ===
 @app.route('/historial')
 def historial():
+    asegurar_archivo_csv()
+
     data = []
-    if os.path.exists(LOG_FILE):
-        with open(LOG_FILE, "r", encoding="utf-8") as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                data.append(row)
+    with open(LOG_FILE, "r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            data.append(row)
 
     if not data:
         return render_template(
