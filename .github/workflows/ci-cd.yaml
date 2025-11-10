@@ -54,7 +54,7 @@ jobs:
     name: Construir y publicar imagen Docker
     needs: test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'  # Solo ejecuta si el push fue a main
+    if: github.ref == 'refs/heads/main'  
 
     steps:
       - name: Checkout del código
