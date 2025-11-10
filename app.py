@@ -24,9 +24,16 @@ def home():
 # === RUTA DE PREDICCIÓN ===
 @app.route('/predecir', methods=['POST'])
 def predecir():
-    edad = int(request.form['edad'])
-    pcr = float(request.form['pcr'])
-    fc = int(request.form['fc'])
+    # ✅ Soporte para JSON y formulario web
+    if request.is_json:
+        data = request.get_json()
+        edad = int(data['edad'])
+        pcr = float(data['pcr'])
+        fc = int(data['fc'])
+    else:
+        edad = int(request.form['edad'])
+        pcr = float(request.form['pcr'])
+        fc = int(request.form['fc'])
 
     # Simulación de un modelo con 5 categorías clínicas
     if pcr < 3 and fc < 90 and edad < 50:
@@ -48,6 +55,11 @@ def predecir():
             edad, pcr, fc, resultado
         ])
 
+    # ✅ Si la petición vino desde JSON (como en los tests), devolvemos JSON
+    if request.is_json:
+        return {"resultado": resultado}, 200
+
+    # ✅ Si vino desde el navegador, renderizamos la plantilla
     return render_template('index.html', resultado=resultado)
 
 # === RUTA DE HISTORIAL (VISUAL) ===
