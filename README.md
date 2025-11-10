@@ -14,6 +14,7 @@ El servicio retorna uno de los siguientes estados clínicos:
 - 🟡 **ENFERMEDAD LEVE**  
 - 🟠 **ENFERMEDAD AGUDA**  
 - 🔴 **ENFERMEDAD CRÓNICA**
+- ⚫ **ENFERMEDAD TERMINAL**
 
 
 ---
@@ -28,7 +29,10 @@ servicio_medico/
 ├── requirements.txt # Dependencias de Python necesarias (Flask, etc.).
 ├── Dockerfile       # Define la imagen Docker del servicio para correr la app en cualquier máquina.
 ├── templates/
-│   └── index.html   # Interfaz web para que el médico ingrese los datos y vea el diagnóstico.
+│   ├── index.html        # Página principal (formulario)
+│   └── historial.html    # Página de historial de predicciones
+├── logs/
+│   └── predicciones.csv  # Archivo donde se guardan las predicciones
 └── README.md        # Documentación del proyecto, instrucciones de uso, ejemplos y créditos.
 ```
 
@@ -88,6 +92,41 @@ Esto detiene el contenedor y libera el puerto 5000.
 
 Resultado esperado → ENFERMEDAD LEVE
 
+
+---
+
+## Consultar resultados previos
+
+Cada predicción se almacena automáticamente en un archivo CSV (logs/predicciones.csv).
+
+Puedes consultar los registros de dos maneras:
+
+
+
+### 1. Desde la página principal
+
+En la interfaz donde realizas las predicciones hay un botón “Consultar predicciones”, que te lleva directamente a la vista con todas las estadísticas y predicciones recientes.
+
+Ideal para los médicos que usan la app de forma visual.
+
+
+
+### 2. Accediendo directamente desde el navegador
+
+
+Accede a:
+
+http://localhost:5000/historial
+
+Esto crea una imagen de Docker que contiene toda la aplicación y sus dependencias.
+
+
+Allí se muestra:
+
+- Número total de predicciones por categoría.
+- Últimas 5 predicciones realizadas.
+- Fecha del último registro.
+
 ---
 
 ## Interfaz Web
@@ -104,13 +143,13 @@ Diagnóstico mostrado de forma clara y visual.
 
 ## Tecnologías usadas
 
-* Python 3.10
+* 🐍 Python 3.10
 
-* Flask (microframework web)
+* 🌶 Flask (microframework web)
 
-* HTML5 / CSS3
+* 🧱 HTML5 / CSS3
 
-* Docker
+* 🐳 Docker
 
 ---
 
